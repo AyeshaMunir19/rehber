@@ -2,26 +2,94 @@ import time
 import streamlit as st
 from google import genai
 
-st.set_page_config(page_title="REHBER", page_icon="🌸")
+st.set_page_config(page_title="REHBER")
 
-# ---------- Soft styling touches ----------
+# ---------- Styling ----------
 st.markdown(
     """
     <style>
-       div.stButton > button {
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+
+    .stApp {
+        background:
+            radial-gradient(circle at 92% 4%, rgba(232,134,155,0.18), transparent 40%),
+            radial-gradient(circle at 3% 97%, rgba(201,162,90,0.14), transparent 38%),
+            #FFF8F0;
+    }
+    .block-container {
+        padding-top: 4rem !important;
+    }
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #FCE9EE 0%, #FBF1E7 100%);
+        border-right: 1px solid #F0D9C4;
+    }
+    h1, h2, h3, h4, h5 {
+        font-family: 'Cormorant Garamond', Georgia, serif !important;
+    }
+    .main h1 {
+        font-size: 2.6rem !important;
+        font-weight: 600 !important;
+        color: #4A3B3B;
+    }
+    .main h3, .main h5 {
+        border-bottom: 1px solid #EBD3B8;
+        padding-bottom: 0.3rem;
+    }
+    [data-testid="stSidebar"] h1 {
+        color: #B5476B;
+        letter-spacing: 0.3em;
+        font-weight: 700 !important;
+        font-size: 2.2rem !important;
+    }
+    [data-testid="stSidebar"] h3 {
+        font-size: 0.85rem !important;
+        letter-spacing: 0.18em;
+        color: #8A6A4F;
+        border-top: 1px solid #EBD3B8;
+        padding-top: 1rem;
+    }
+    [data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
+        font-style: italic;
+        font-size: 1.05rem;
+    }
+    .kicker {
+        color: #B8935A;
+        letter-spacing: 0.32em;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: -0.6rem;
+    }
+    .ornament {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #B8935A;
+        font-size: 0.95rem;
+        margin: 0.3rem 0 1.1rem 0;
+    }
+    .ornament::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 1px;
+        background: linear-gradient(90deg, #D9B98A, transparent);
+    }
+    div.stButton > button {
         border-radius: 999px;
         padding: 0.6rem 1.8rem;
         font-weight: 600;
+        box-shadow: 0 4px 14px rgba(181,71,107,0.25);
     }
     div[data-testid="stExpander"] {
-        border: 1px solid #F3C9D5;
+        border: 1px solid #EBD3B8;
         border-radius: 12px;
         background: #FFFDF9;
     }
     div[data-baseweb="textarea"] {
         background-color: #FFFFFF !important;
         border: 1px solid #E7B3C4 !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
+        box-shadow: 0 8px 26px rgba(181,71,107,0.08);
     }
     div[data-baseweb="textarea"] textarea {
         background-color: #FFFFFF !important;
@@ -55,9 +123,9 @@ STYLES = {
 }
 
 # ---------- Sidebar: learning profile ----------
-st.sidebar.title("🌸 REHBER")
+st.sidebar.title("REHBER")
 st.sidebar.caption("Your Personal Learning Guide")
-st.sidebar.subheader("✨ YOUR LEARNING PROFILE")
+st.sidebar.subheader("✦ YOUR LEARNING PROFILE")
 
 subject = st.sidebar.selectbox(
     "📚 What are you learning?",
@@ -120,6 +188,7 @@ Rules:
 - Structure instruction: {structure_guidance[style]}
 - Start teaching right away. Skip long greetings and do not refer to yourself as an AI or a chatbot.
 - Let the learner's level and background shape the lesson silently. Never mention their settings (level, background, style) out loud.
+- Never write phrases like "at an advanced level" or "since you know the basics".
 - Adapt the complexity, terminology, depth, examples, and structure to the learner.
 - Explain any unfamiliar terminology.
 - Prioritize factual accuracy. Double-check technical terms before using them, and do not mix up similar-sounding concepts. If you are unsure about something, say so instead of guessing.
@@ -186,25 +255,29 @@ def get_explanation(prompt):
 
 
 # ---------- Main page ----------
-st.title("✨ What are we learning today?")
+st.markdown('<div class="kicker">YOUR STUDY DESK</div>', unsafe_allow_html=True)
+st.title("What are we learning today?")
+st.markdown('<div class="ornament">✦</div>', unsafe_allow_html=True)
 st.write("Understand it your way.")
 
-st.markdown("#### 💬 What would you like to understand?")
+st.markdown("##### What would you like to understand?")
 st.write("Ask anything you're learning about, and I'll explain it your way.")
 
 question = st.text_area(
     "Your question",
     placeholder="Try: Explain Newton's Second Law with a real-life example...",
-    height=150,
+    height=110,
     label_visibility="collapsed",
 )
+
+teach_clicked = st.button("✨ Teach Me", type="primary")
 
 st.caption(
     "Try asking:  📐 Explain derivatives simply  ·  "
     "🌱 Why does photosynthesis happen?  ·  💻 Help me understand recursion"
 )
 
-if st.button("✨ Teach Me", type="primary"):
+if teach_clicked:
     if question.strip() == "":
         st.warning("🌷 Please enter a question first.")
     else:
