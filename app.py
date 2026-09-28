@@ -99,6 +99,42 @@ st.markdown(
         color: #7A5560 !important;
         opacity: 1 !important;
     }
+    .main .stMarkdown p, .main .stMarkdown li {
+        overflow-wrap: anywhere;
+    }
+    .mobile-hint {
+        display: none;
+        background: #FCE9EE;
+        border: 1px solid #F0D9C4;
+        border-radius: 10px;
+        padding: 0.55rem 0.8rem;
+        font-size: 0.85rem;
+        color: #7A5560;
+        margin: 0.4rem 0 0.8rem 0;
+    }
+
+    /* ---------- Phones and small tablets ---------- */
+    @media (max-width: 768px) {
+        .block-container {
+            padding: 3.6rem 1rem 2rem 1rem !important;
+        }
+        .main h1 {
+            font-size: 1.9rem !important;
+            line-height: 1.15 !important;
+        }
+        .main h3, .main h5 {
+            font-size: 1.15rem !important;
+        }
+        .kicker {
+            letter-spacing: 0.22em;
+        }
+        div.stButton > button {
+            width: 100%;
+        }
+        .mobile-hint {
+            display: block;
+        }
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -259,6 +295,11 @@ st.markdown('<div class="kicker">YOUR STUDY DESK</div>', unsafe_allow_html=True)
 st.title("What are we learning today?")
 st.markdown('<div class="ornament">✦</div>', unsafe_allow_html=True)
 st.write("Understand it your way.")
+st.markdown(
+    '<div class="mobile-hint">On a phone? Tap the small arrow at the top-left '
+    "to set your learning profile.</div>",
+    unsafe_allow_html=True,
+)
 
 st.markdown("##### What would you like to understand?")
 st.write("Ask anything you're learning about, and I'll explain it your way.")
