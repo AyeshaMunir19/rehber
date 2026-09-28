@@ -6,78 +6,112 @@ st.set_page_config(page_title="REHBER")
 
 
 # ============================================================
-# MOBILE PROFILE BUTTON
+# MOBILE SIDEBAR BUTTON
 # ============================================================
-
 st.markdown(
     """
     <style>
 
-    /* ---------- Mobile Profile Button ---------- */
-
+    /* --------------------------------------------------------
+       MOBILE: make Streamlit's real sidebar button obvious
+       -------------------------------------------------------- */
     @media (max-width: 768px) {
 
-        [data-testid="collapsedControl"],
+        /* Streamlit top header */
+        [data-testid="stHeader"] {
+            position: relative !important;
+            height: 70px !important;
+            background: #FFF8F0 !important;
+            z-index: 999990 !important;
+        }
+
+        /* Actual collapsed sidebar control */
         [data-testid="stSidebarCollapsedControl"] {
             display: flex !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 12px !important;
+
+            width: 145px !important;
+            height: 48px !important;
+
             align-items: center !important;
             justify-content: center !important;
-            gap: 6px !important;
-
-            position: fixed !important;
-
-            /* Put it below Streamlit's top toolbar */
-            top: 8rem !important;
-            left: 0.8rem !important;
 
             background: #B5476B !important;
-            color: #FFFFFF !important;
-
             border-radius: 999px !important;
 
-            padding: 9px 15px !important;
+            padding: 0 !important;
+            margin: 0 !important;
 
-            min-width: 125px !important;
-            min-height: 46px !important;
-
-            box-shadow: 0 5px 18px rgba(181,71,107,0.35) !important;
+            box-shadow:
+                0 5px 18px rgba(181, 71, 107, 0.40) !important;
 
             z-index: 999999 !important;
 
-            animation: rehber-pulse 1.6s ease-in-out 3;
+            animation: rehber-pulse 1.5s ease-in-out 3 !important;
+        }
+
+        /* Hide Streamlit's tiny arrow */
+        [data-testid="stSidebarCollapsedControl"] svg {
+            display: none !important;
+        }
+
+        /* Make the clickable button fill the whole pink pill */
+        [data-testid="stSidebarCollapsedControl"] button {
+            width: 145px !important;
+            min-width: 145px !important;
+            height: 48px !important;
+            min-height: 48px !important;
+
+            background: transparent !important;
+            border: none !important;
+            border-radius: 999px !important;
+
+            padding: 0 !important;
+            margin: 0 !important;
 
             cursor: pointer !important;
         }
 
-        /* Make Streamlit's original icon visible */
-        [data-testid="collapsedControl"] *,
-        [data-testid="stSidebarCollapsedControl"] * {
-            color: #FFFFFF !important;
-            fill: #FFFFFF !important;
-        }
+        /* The words users see */
+        [data-testid="stSidebarCollapsedControl"]::before {
+            content: "🌸  👋  Tap me!" !important;
 
-        /* Little character / instruction */
-        [data-testid="collapsedControl"]::after,
-        [data-testid="stSidebarCollapsedControl"]::after {
-            content: "🌸 👋 Tap me!";
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            position: absolute !important;
+            inset: 0 !important;
+
             color: #FFFFFF !important;
+
             font-family: Georgia, serif !important;
-            font-size: 0.9rem !important;
+            font-size: 16px !important;
             font-weight: 700 !important;
-            letter-spacing: 0.02em !important;
+
             white-space: nowrap !important;
+
+            pointer-events: none !important;
+            z-index: 2 !important;
         }
     }
 
+
+    /* --------------------------------------------------------
+       Small animation to attract attention
+       -------------------------------------------------------- */
     @keyframes rehber-pulse {
         0%, 100% {
-            box-shadow: 0 5px 18px rgba(181,71,107,0.35);
+            box-shadow:
+                0 5px 18px rgba(181, 71, 107, 0.40);
         }
 
         50% {
             box-shadow:
-                0 0 0 8px rgba(181,71,107,0.18),
-                0 5px 18px rgba(181,71,107,0.35);
+                0 0 0 9px rgba(181, 71, 107, 0.16),
+                0 5px 18px rgba(181, 71, 107, 0.40);
         }
     }
 
@@ -90,12 +124,13 @@ st.markdown(
 # ============================================================
 # MAIN STYLING
 # ============================================================
-
 st.markdown(
     """
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+    @import url(
+        'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap'
+    );
 
     .stApp {
         background:
@@ -117,16 +152,21 @@ st.markdown(
     }
 
     [data-testid="stSidebar"] {
-        background: linear-gradient(
-            180deg,
-            #FCE9EE 0%,
-            #FBF1E7 100%
-        );
+        background:
+            linear-gradient(
+                180deg,
+                #FCE9EE 0%,
+                #FBF1E7 100%
+            );
+
         border-right: 1px solid #F0D9C4;
     }
 
     h1, h2, h3, h4, h5 {
-        font-family: 'Cormorant Garamond', Georgia, serif !important;
+        font-family:
+            'Cormorant Garamond',
+            Georgia,
+            serif !important;
     }
 
     .main h1 {
@@ -184,18 +224,21 @@ st.markdown(
         display: block;
         width: 80px;
         height: 1px;
-        background: linear-gradient(
-            90deg,
-            #D9B98A,
-            transparent
-        );
+        background:
+            linear-gradient(
+                90deg,
+                #D9B98A,
+                transparent
+            );
     }
 
     div.stButton > button {
         border-radius: 999px;
         padding: 0.6rem 1.8rem;
         font-weight: 600;
-        box-shadow: 0 4px 14px rgba(181,71,107,0.25);
+
+        box-shadow:
+            0 4px 14px rgba(181,71,107,0.25);
     }
 
     div[data-testid="stExpander"] {
@@ -208,7 +251,9 @@ st.markdown(
         background-color: #FFFFFF !important;
         border: 1px solid #E7B3C4 !important;
         border-radius: 14px !important;
-        box-shadow: 0 8px 26px rgba(181,71,107,0.08);
+
+        box-shadow:
+            0 8px 26px rgba(181,71,107,0.08);
     }
 
     div[data-baseweb="textarea"] textarea {
@@ -227,12 +272,17 @@ st.markdown(
     }
 
 
-    /* ---------- Phones and small tablets ---------- */
-
+    /* --------------------------------------------------------
+       PHONES AND SMALL TABLETS
+       -------------------------------------------------------- */
     @media (max-width: 768px) {
 
         .block-container {
-            padding: 4rem 1rem 2rem 1rem !important;
+            padding:
+                3.6rem
+                1rem
+                2rem
+                1rem !important;
         }
 
         .main h1 {
@@ -261,7 +311,7 @@ st.markdown(
 
 
 # ============================================================
-# FRIENDLY LABELS -> VALUES USED IN THE PROMPT
+# FRIENDLY LABELS -> VALUES USED IN PROMPT
 # ============================================================
 
 LANGUAGES = {
@@ -289,8 +339,14 @@ STYLES = {
 # ============================================================
 
 st.sidebar.title("REHBER")
-st.sidebar.caption("Your Personal Learning Guide")
-st.sidebar.subheader("✦ YOUR LEARNING PROFILE")
+
+st.sidebar.caption(
+    "Your Personal Learning Guide"
+)
+
+st.sidebar.subheader(
+    "✦ YOUR LEARNING PROFILE"
+)
 
 subject = st.sidebar.selectbox(
     "📚 What are you learning?",
@@ -299,7 +355,7 @@ subject = st.sidebar.selectbox(
         "Physics",
         "Programming",
         "Chemistry",
-        "Biology"
+        "Biology",
     ],
 )
 
@@ -308,7 +364,7 @@ level = st.sidebar.selectbox(
     [
         "Beginner",
         "Intermediate",
-        "Advanced"
+        "Advanced",
     ],
 )
 
@@ -328,9 +384,11 @@ style_label = st.sidebar.selectbox(
 )
 
 
-# The values the prompt builder uses
+# Values used by prompt builder
 background = BACKGROUNDS[background_label]
+
 language = LANGUAGES[language_label]
+
 style = STYLES[style_label]
 
 style_name = style_label.split(" ", 1)[1]
@@ -346,78 +404,144 @@ def build_prompt(
     background,
     language,
     style,
-    question
+    question,
 ):
 
     style_guidance = {
+
         "Simple Explanations":
-            "Keep it short and easy to follow, using everyday words and simple analogies.",
+            "Keep it short and easy to follow, "
+            "using everyday words and simple analogies.",
 
         "Step-by-Step":
-            "Teach it as a numbered sequence. Each step covers one small idea. Do not write long essay paragraphs.",
+            "Teach it as a numbered sequence. "
+            "Each step covers one small idea. "
+            "Do not write long essay paragraphs.",
 
         "Detailed":
-            "Go deep: cover the reasoning, edge cases, and how the parts connect.",
+            "Go deep: cover the reasoning, "
+            "edge cases, and how the parts connect.",
 
         "Example-Based":
-            "Teach mainly through 2 or 3 concrete examples, with short explanations around them.",
+            "Teach mainly through 2 or 3 concrete examples, "
+            "with short explanations around them.",
     }
+
 
     structure_guidance = {
 
         "Simple Explanations":
-            "Use short markdown headings such as ### 🧭 The Big Idea, ### 💡 In Simple Words, ### 🌍 Example, ### ⭐ Key Takeaway. Only include the sections that are useful.",
+            "Use short markdown headings such as "
+            "### 🧭 The Big Idea, "
+            "### 💡 In Simple Words, "
+            "### 🌍 Example, "
+            "### ⭐ Key Takeaway. "
+            "Only include the sections that are useful.",
 
         "Step-by-Step":
-            "Use ONLY these headings: ### Step 1: <short title>, ### Step 2: <short title>, and so on (usually 4 to 6 steps), and finish with ### ⭐ Key Takeaway. Put any formula or code inside the step where it belongs. Do not add other sections.",
+            "Use ONLY these headings: "
+            "### Step 1: <short title>, "
+            "### Step 2: <short title>, "
+            "and so on (usually 4 to 6 steps), "
+            "and finish with "
+            "### ⭐ Key Takeaway. "
+            "Put any formula or code inside the step where it belongs. "
+            "Do not add other sections.",
 
         "Detailed":
-            "Use short markdown headings such as ### 🧭 The Big Idea, ### 🧮 Key Concept / Formula, ### 🌍 Example, ### ⭐ Key Takeaway. Only include the sections that are useful.",
+            "Use short markdown headings such as "
+            "### 🧭 The Big Idea, "
+            "### 🧮 Key Concept / Formula, "
+            "### 🌍 Example, "
+            "### ⭐ Key Takeaway. "
+            "Only include the sections that are useful.",
 
         "Example-Based":
-            "Use short markdown headings such as ### 🧭 The Big Idea, ### 🌍 Example 1, ### 🌍 Example 2, ### ⭐ Key Takeaway. Only include the sections that are useful.",
+            "Use short markdown headings such as "
+            "### 🧭 The Big Idea, "
+            "### 🌍 Example 1, "
+            "### 🌍 Example 2, "
+            "### ⭐ Key Takeaway. "
+            "Only include the sections that are useful.",
     }
 
-    return f"""You are Rehber, a patient, encouraging personal learning guide.
+
+    return f"""
+You are Rehber, a patient, encouraging personal learning guide.
 
 The student is studying: {subject}
+
 Their learning level: {level}
+
 Their background knowledge: {background}
+
 Their preferred language: {language}
+
 Their preferred explanation style: {style}
 
+
 Student question:
+
 {question}
+
 
 Generate an educational explanation appropriate for this learner.
 
+
 Rules:
+
 - Write the ENTIRE response in {language}.
-- Style instruction: {style_guidance[style]}
-- Structure instruction: {structure_guidance[style]}
-- Start teaching right away. Skip long greetings and do not refer to yourself as an AI or a chatbot.
-- Let the learner's level and background shape the lesson silently. Never mention their settings (level, background, style) out loud.
-- Never write phrases like "at an advanced level" or "since you know the basics".
-- Adapt the complexity, terminology, depth, examples, and structure to the learner.
+
+- Style instruction:
+  {style_guidance[style]}
+
+- Structure instruction:
+  {structure_guidance[style]}
+
+- Start teaching right away.
+  Skip long greetings and do not refer to yourself as an AI or a chatbot.
+
+- Let the learner's level and background shape the lesson silently.
+  Never mention their settings (level, background, style) out loud.
+
+- Never write phrases like
+  "at an advanced level"
+  or
+  "since you know the basics".
+
+- Adapt the complexity, terminology, depth,
+  examples, and structure to the learner.
+
 - Explain any unfamiliar terminology.
-- Prioritize factual accuracy. Double-check technical terms before using them, and do not mix up similar-sounding concepts. If you are unsure about something, say so instead of guessing.
-- Actually teach the concept. Do not just repeat the question.
+
+- Prioritize factual accuracy.
+
+- Double-check technical terms before using them,
+  and do not mix up similar-sounding concepts.
+
+- If you are unsure about something,
+  say so instead of guessing.
+
+- Actually teach the concept.
+  Do not just repeat the question.
+
 - Do not add step labels inside code comments.
 """
 
 
 # ============================================================
-# "WHY IS THIS EXPLAINED THIS WAY?" TEXT
+# "WHY IS THIS EXPLAINED THIS WAY?"
 # ============================================================
 
 def build_why_text(
     level,
     background,
     language,
-    style
+    style,
 ):
 
     level_notes = {
+
         "Beginner":
             "simpler terminology and everyday ideas",
 
@@ -428,7 +552,9 @@ def build_why_text(
             "deeper reasoning and more technical detail",
     }
 
+
     background_notes = {
+
         "Little / Basic":
             "explaining new terms as they appear",
 
@@ -439,7 +565,9 @@ def build_why_text(
             "skipping the basics and going straight to the deeper ideas",
     }
 
+
     style_notes = {
+
         "Simple Explanations":
             "keeping everything short and easy to follow",
 
@@ -453,42 +581,60 @@ def build_why_text(
             "teaching through concrete examples",
     }
 
+
     return (
         "You selected:\n\n"
+
         f"- 🌱 {level}\n"
+
         f"- 🧠 {background_label}\n"
+
         f"- 🌐 {language}\n"
+
         f"- ✨ {style_name}\n\n"
-        f"So your guide is using {level_notes[level]}, "
-        f"{background_notes[background]}, and "
-        f"{style_notes[style]}, "
+
+        f"So your guide is using "
+        f"{level_notes[level]}, "
+
+        f"{background_notes[background]}, "
+        f"and {style_notes[style]}, "
+
         f"written in {language}."
     )
 
 
 # ============================================================
-# TALKING TO THE MODEL
+# TALKING TO GEMINI
 # ============================================================
 
 def get_explanation(prompt):
+
     """Returns (answer, error_message). One of them is always None."""
 
     try:
+
         api_key = st.secrets["GEMINI_API_KEY"]
 
     except Exception:
+
         return (
             None,
-            "🔑 The API key is missing. Please check your secrets.toml file."
+            "🔑 The API key is missing. "
+            "Please check your secrets.toml file."
         )
 
-    client = genai.Client(api_key=api_key)
+
+    client = genai.Client(
+        api_key=api_key
+    )
+
 
     models_to_try = [
         "gemini-3.5-flash-lite",
         "gemini-3.8-flash",
-        "gemini-3.7-flash"
+        "gemini-3.7-flash",
     ]
+
 
     for model_name in models_to_try:
 
@@ -501,21 +647,30 @@ def get_explanation(prompt):
                     contents=prompt,
                 )
 
+
                 if response.text:
-                    return response.text, None
+
+                    return (
+                        response.text,
+                        None
+                    )
+
 
             except Exception as e:
 
                 print(
-                    f"API error ({model_name}, "
+                    f"API error "
+                    f"({model_name}, "
                     f"try {attempt + 1}): {e}"
                 )
 
                 time.sleep(2)
 
+
     return (
         None,
-        "Something went wrong while getting your explanation. Please try again."
+        "Something went wrong while getting "
+        "your explanation. Please try again."
     )
 
 
@@ -525,20 +680,26 @@ def get_explanation(prompt):
 
 st.markdown(
     '<div class="kicker">YOUR STUDY DESK</div>',
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
-st.title("What are we learning today?")
+st.title(
+    "What are we learning today?"
+)
 
 st.markdown(
     '<div class="ornament">✦</div>',
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
-st.write("Understand it your way.")
+st.write(
+    "Understand it your way."
+)
 
 
-# ---------- Question section ----------
+# ============================================================
+# QUESTION AREA
+# ============================================================
 
 st.markdown(
     "##### What would you like to understand?"
@@ -552,20 +713,27 @@ st.write(
 
 question = st.text_area(
     "Your question",
-    placeholder="Try: Explain Newton's Second Law with a real-life example...",
+
+    placeholder=(
+        "Try: Explain Newton's Second Law "
+        "with a real-life example..."
+    ),
+
     height=110,
+
     label_visibility="collapsed",
 )
 
 
 teach_clicked = st.button(
     "✨ Teach Me",
-    type="primary"
+    type="primary",
 )
 
 
 st.caption(
-    "Try asking:  📐 Explain derivatives simply  ·  "
+    "Try asking:  "
+    "📐 Explain derivatives simply  ·  "
     "🌱 Why does photosynthesis happen?  ·  "
     "💻 Help me understand recursion"
 )
@@ -591,14 +759,18 @@ if teach_clicked:
             background,
             language,
             style,
-            question
+            question,
         )
+
 
         with st.spinner(
             "✨ Preparing your lesson..."
         ):
 
-            answer, error = get_explanation(prompt)
+            answer, error = get_explanation(
+                prompt
+            )
+
 
         if error:
 
@@ -610,13 +782,16 @@ if teach_clicked:
                 "📖 Your Explanation"
             )
 
+
             st.caption(
-                f"Tailored for {subject} • "
+                f"Tailored for "
+                f"{subject} • "
                 f"{level} • "
                 f"{background_label} • "
                 f"{language} • "
                 f"{style_name}"
             )
+
 
             with st.expander(
                 "✨ Why is this explained this way?"
@@ -627,8 +802,9 @@ if teach_clicked:
                         level,
                         background,
                         language,
-                        style
+                        style,
                     )
                 )
+
 
             st.markdown(answer)
