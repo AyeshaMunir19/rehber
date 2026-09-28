@@ -2,71 +2,113 @@ import time
 import streamlit as st
 from google import genai
 
-
 st.set_page_config(page_title="REHBER")
 
 
-# ---------- Mobile sidebar button ----------
+# ============================================================
+# MOBILE PROFILE BUTTON
+# ============================================================
+
 st.markdown(
     """
     <style>
+
+    /* ---------- Mobile Profile Button ---------- */
+
     @media (max-width: 768px) {
+
         [data-testid="collapsedControl"],
         [data-testid="stSidebarCollapsedControl"] {
             display: flex !important;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            background: #B5476B !important;
-            border-radius: 999px !important;
-            padding: 8px 14px !important;
-            top: 0.7rem !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+
+            position: fixed !important;
+
+            /* Put it below Streamlit's top toolbar */
+            top: 8rem !important;
             left: 0.8rem !important;
-            box-shadow: 0 4px 14px rgba(181,71,107,0.35);
+
+            background: #B5476B !important;
+            color: #FFFFFF !important;
+
+            border-radius: 999px !important;
+
+            padding: 9px 15px !important;
+
+            min-width: 125px !important;
+            min-height: 46px !important;
+
+            box-shadow: 0 5px 18px rgba(181,71,107,0.35) !important;
+
+            z-index: 999999 !important;
+
             animation: rehber-pulse 1.6s ease-in-out 3;
-            z-index: 9999 !important;
+
+            cursor: pointer !important;
         }
 
+        /* Make Streamlit's original icon visible */
         [data-testid="collapsedControl"] *,
         [data-testid="stSidebarCollapsedControl"] * {
             color: #FFFFFF !important;
+            fill: #FFFFFF !important;
         }
 
+        /* Little character / instruction */
         [data-testid="collapsedControl"]::after,
         [data-testid="stSidebarCollapsedControl"]::after {
-            content: "🌸 Profile";
+            content: "🌸 👋 Tap me!";
             color: #FFFFFF !important;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.03em;
+            font-family: Georgia, serif !important;
+            font-size: 0.9rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.02em !important;
+            white-space: nowrap !important;
         }
     }
 
     @keyframes rehber-pulse {
         0%, 100% {
-            box-shadow: 0 4px 14px rgba(181,71,107,0.35);
+            box-shadow: 0 5px 18px rgba(181,71,107,0.35);
         }
 
         50% {
-            box-shadow: 0 0 0 8px rgba(181,71,107,0.18);
+            box-shadow:
+                0 0 0 8px rgba(181,71,107,0.18),
+                0 5px 18px rgba(181,71,107,0.35);
         }
     }
+
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 
-# ---------- Styling ----------
+# ============================================================
+# MAIN STYLING
+# ============================================================
+
 st.markdown(
     """
     <style>
+
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap');
 
     .stApp {
         background:
-            radial-gradient(circle at 92% 4%, rgba(232,134,155,0.18), transparent 40%),
-            radial-gradient(circle at 3% 97%, rgba(201,162,90,0.14), transparent 38%),
+            radial-gradient(
+                circle at 92% 4%,
+                rgba(232,134,155,0.18),
+                transparent 40%
+            ),
+            radial-gradient(
+                circle at 3% 97%,
+                rgba(201,162,90,0.14),
+                transparent 38%
+            ),
             #FFF8F0;
     }
 
@@ -75,7 +117,11 @@ st.markdown(
     }
 
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #FCE9EE 0%, #FBF1E7 100%);
+        background: linear-gradient(
+            180deg,
+            #FCE9EE 0%,
+            #FBF1E7 100%
+        );
         border-right: 1px solid #F0D9C4;
     }
 
@@ -89,7 +135,8 @@ st.markdown(
         color: #4A3B3B;
     }
 
-    .main h3, .main h5 {
+    .main h3,
+    .main h5 {
         border-bottom: 1px solid #EBD3B8;
         padding-bottom: 0.3rem;
     }
@@ -109,7 +156,8 @@ st.markdown(
         padding-top: 1rem;
     }
 
-    [data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
+    [data-testid="stSidebar"]
+    [data-testid="stCaptionContainer"] p {
         font-style: italic;
         font-size: 1.05rem;
     }
@@ -136,7 +184,11 @@ st.markdown(
         display: block;
         width: 80px;
         height: 1px;
-        background: linear-gradient(90deg, #D9B98A, transparent);
+        background: linear-gradient(
+            90deg,
+            #D9B98A,
+            transparent
+        );
     }
 
     div.stButton > button {
@@ -174,24 +226,13 @@ st.markdown(
         overflow-wrap: anywhere;
     }
 
-    .mobile-hint {
-        display: none;
-        background: #FCE9EE;
-        border: 1px solid #F0D9C4;
-        border-radius: 10px;
-        padding: 0.55rem 0.8rem;
-        font-size: 0.85rem;
-        color: #7A5560;
-        margin: 0.4rem 0 0.8rem 0;
-    }
-
 
     /* ---------- Phones and small tablets ---------- */
 
     @media (max-width: 768px) {
 
         .block-container {
-            padding: 3.6rem 1rem 2rem 1rem !important;
+            padding: 4rem 1rem 2rem 1rem !important;
         }
 
         .main h1 {
@@ -211,18 +252,17 @@ st.markdown(
         div.stButton > button {
             width: 100%;
         }
-
-        .mobile-hint {
-            display: block;
-        }
     }
+
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 
-# ---------- Friendly labels -> values used in the prompt ----------
+# ============================================================
+# FRIENDLY LABELS -> VALUES USED IN THE PROMPT
+# ============================================================
 
 LANGUAGES = {
     "🇬🇧 English": "English",
@@ -244,7 +284,9 @@ STYLES = {
 }
 
 
-# ---------- Sidebar: learning profile ----------
+# ============================================================
+# SIDEBAR: LEARNING PROFILE
+# ============================================================
 
 st.sidebar.title("REHBER")
 st.sidebar.caption("Your Personal Learning Guide")
@@ -252,12 +294,22 @@ st.sidebar.subheader("✦ YOUR LEARNING PROFILE")
 
 subject = st.sidebar.selectbox(
     "📚 What are you learning?",
-    ["Mathematics", "Physics", "Programming", "Chemistry", "Biology"],
+    [
+        "Mathematics",
+        "Physics",
+        "Programming",
+        "Chemistry",
+        "Biology"
+    ],
 )
 
 level = st.sidebar.selectbox(
     "🌱 Your level",
-    ["Beginner", "Intermediate", "Advanced"],
+    [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+    ],
 )
 
 background_label = st.sidebar.selectbox(
@@ -277,24 +329,32 @@ style_label = st.sidebar.selectbox(
 
 
 # The values the prompt builder uses
-
 background = BACKGROUNDS[background_label]
 language = LANGUAGES[language_label]
 style = STYLES[style_label]
+
 style_name = style_label.split(" ", 1)[1]
 
 
-# ---------- Prompt builder ----------
+# ============================================================
+# PROMPT BUILDER
+# ============================================================
 
-def build_prompt(subject, level, background, language, style, question):
+def build_prompt(
+    subject,
+    level,
+    background,
+    language,
+    style,
+    question
+):
 
     style_guidance = {
         "Simple Explanations":
             "Keep it short and easy to follow, using everyday words and simple analogies.",
 
         "Step-by-Step":
-            "Teach it as a numbered sequence. Each step covers one small idea. "
-            "Do not write long essay paragraphs.",
+            "Teach it as a numbered sequence. Each step covers one small idea. Do not write long essay paragraphs.",
 
         "Detailed":
             "Go deep: cover the reasoning, edge cases, and how the parts connect.",
@@ -304,27 +364,18 @@ def build_prompt(subject, level, background, language, style, question):
     }
 
     structure_guidance = {
+
         "Simple Explanations":
-            "Use short markdown headings such as ### 🧭 The Big Idea, "
-            "### 💡 In Simple Words, ### 🌍 Example, ### ⭐ Key Takeaway. "
-            "Only include the sections that are useful.",
+            "Use short markdown headings such as ### 🧭 The Big Idea, ### 💡 In Simple Words, ### 🌍 Example, ### ⭐ Key Takeaway. Only include the sections that are useful.",
 
         "Step-by-Step":
-            "Use ONLY these headings: ### Step 1: <short title>, "
-            "### Step 2: <short title>, and so on (usually 4 to 6 steps), "
-            "and finish with ### ⭐ Key Takeaway. "
-            "Put any formula or code inside the step where it belongs. "
-            "Do not add other sections.",
+            "Use ONLY these headings: ### Step 1: <short title>, ### Step 2: <short title>, and so on (usually 4 to 6 steps), and finish with ### ⭐ Key Takeaway. Put any formula or code inside the step where it belongs. Do not add other sections.",
 
         "Detailed":
-            "Use short markdown headings such as ### 🧭 The Big Idea, "
-            "### 🧮 Key Concept / Formula, ### 🌍 Example, "
-            "### ⭐ Key Takeaway. Only include the sections that are useful.",
+            "Use short markdown headings such as ### 🧭 The Big Idea, ### 🧮 Key Concept / Formula, ### 🌍 Example, ### ⭐ Key Takeaway. Only include the sections that are useful.",
 
         "Example-Based":
-            "Use short markdown headings such as ### 🧭 The Big Idea, "
-            "### 🌍 Example 1, ### 🌍 Example 2, "
-            "### ⭐ Key Takeaway. Only include the sections that are useful.",
+            "Use short markdown headings such as ### 🧭 The Big Idea, ### 🌍 Example 1, ### 🌍 Example 2, ### ⭐ Key Takeaway. Only include the sections that are useful.",
     }
 
     return f"""You are Rehber, a patient, encouraging personal learning guide.
@@ -355,9 +406,16 @@ Rules:
 """
 
 
-# ---------- "Why is this explained this way?" text ----------
+# ============================================================
+# "WHY IS THIS EXPLAINED THIS WAY?" TEXT
+# ============================================================
 
-def build_why_text(level, background, language, style):
+def build_why_text(
+    level,
+    background,
+    language,
+    style
+):
 
     level_notes = {
         "Beginner":
@@ -402,12 +460,15 @@ def build_why_text(level, background, language, style):
         f"- 🌐 {language}\n"
         f"- ✨ {style_name}\n\n"
         f"So your guide is using {level_notes[level]}, "
-        f"{background_notes[background]}, and {style_notes[style]}, "
+        f"{background_notes[background]}, and "
+        f"{style_notes[style]}, "
         f"written in {language}."
     )
 
 
-# ---------- Talking to the model ----------
+# ============================================================
+# TALKING TO THE MODEL
+# ============================================================
 
 def get_explanation(prompt):
     """Returns (answer, error_message). One of them is always None."""
@@ -416,7 +477,10 @@ def get_explanation(prompt):
         api_key = st.secrets["GEMINI_API_KEY"]
 
     except Exception:
-        return None, "🔑 The API key is missing. Please check your secrets.toml file."
+        return (
+            None,
+            "🔑 The API key is missing. Please check your secrets.toml file."
+        )
 
     client = genai.Client(api_key=api_key)
 
@@ -443,15 +507,21 @@ def get_explanation(prompt):
             except Exception as e:
 
                 print(
-                    f"API error ({model_name}, try {attempt + 1}): {e}"
+                    f"API error ({model_name}, "
+                    f"try {attempt + 1}): {e}"
                 )
 
                 time.sleep(2)
 
-    return None, "Something went wrong while getting your explanation. Please try again."
+    return (
+        None,
+        "Something went wrong while getting your explanation. Please try again."
+    )
 
 
-# ---------- Main page ----------
+# ============================================================
+# MAIN PAGE
+# ============================================================
 
 st.markdown(
     '<div class="kicker">YOUR STUDY DESK</div>',
@@ -468,23 +538,15 @@ st.markdown(
 st.write("Understand it your way.")
 
 
-# ---------- Mobile hint ----------
-# IMPORTANT: only ONE st.markdown() here.
-# This fixes the DeltaGenerator(...) problem.
+# ---------- Question section ----------
 
 st.markdown(
-    '<div class="mobile-hint">'
-    'On a phone? Tap the 🌸 Profile button at the top-left '
-    'to set your learning profile.'
-    '</div>',
-    unsafe_allow_html=True,
+    "##### What would you like to understand?"
 )
 
-
-st.markdown("##### What would you like to understand?")
-
 st.write(
-    "Ask anything you're learning about, and I'll explain it your way."
+    "Ask anything you're learning about, "
+    "and I'll explain it your way."
 )
 
 
@@ -509,12 +571,17 @@ st.caption(
 )
 
 
-# ---------- Generate explanation ----------
+# ============================================================
+# GENERATE EXPLANATION
+# ============================================================
 
 if teach_clicked:
 
     if question.strip() == "":
-        st.warning("🌷 Please enter a question first.")
+
+        st.warning(
+            "🌷 Please enter a question first."
+        )
 
     else:
 
@@ -527,7 +594,9 @@ if teach_clicked:
             question
         )
 
-        with st.spinner("✨ Preparing your lesson..."):
+        with st.spinner(
+            "✨ Preparing your lesson..."
+        ):
 
             answer, error = get_explanation(prompt)
 
@@ -537,14 +606,21 @@ if teach_clicked:
 
         else:
 
-            st.subheader("📖 Your Explanation")
-
-            st.caption(
-                f"Tailored for {subject} • {level} • "
-                f"{background_label} • {language} • {style_name}"
+            st.subheader(
+                "📖 Your Explanation"
             )
 
-            with st.expander("✨ Why is this explained this way?"):
+            st.caption(
+                f"Tailored for {subject} • "
+                f"{level} • "
+                f"{background_label} • "
+                f"{language} • "
+                f"{style_name}"
+            )
+
+            with st.expander(
+                "✨ Why is this explained this way?"
+            ):
 
                 st.markdown(
                     build_why_text(
